@@ -1,8 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  </head>
-  <body>
-    Bom dia povo
-  </body>
+	<head>
+		<script>
+			var query = 'SELECT+D';
+			var text = '';
+			var toPost;
+			var url = 'https://script.google.com/macros/s/AKfycbwbCKuwxG1aPeMUnnWsBN7PP8nx_R3bny9OOpuMewLC6pIE2Z531n-0cs82FNmoVCKfHQ/exec';
+			fetch(url)
+				.then(res => res.json())
+				.then(data => {
+					var c = 0;
+					//console.log(data);
+					data.forEach(row => {
+						
+						fetch('https://api.tibiadata.com/v3/character/'+row[3])
+							.then(res => res.json())
+							.then(tibia => {
+								c++;
+								if(c>1){
+									boneco = tibia.characters.character;
+									var nome = row[0].toString().replace(',','');
+									var cargo = row[1].toString().replace(',','');
+									var contato = row[2].toString().replace(',','');
+									var chars = row[3].toString().replace(',','');
+									var voc = boneco.vocation.toString().replace(',','');
+									switch(voc){
+										case 'Elite Knight':
+											voc = 'EK';
+											break;
+										case 'Master Sorcerer':
+											voc = 'MS';
+											break;
+										case 'Elder Druid':
+											voc = 'ED';
+											break;
+										case 'Royal Paladin':
+											voc = 'RP';
+											break;
+										case 'Knight':
+											voc = 'EK';
+											break;
+										case 'Sorcerer':
+											voc = 'MS';
+											break;
+										case 'Druid':
+											voc = 'ED';
+											break;
+										case 'Paladin':
+											voc = 'RP';
+											break;
+									}
+									var lvl = boneco.level.toString().replace(',','');
+									text += nome+','+cargo+','+contato+','+chars+','+voc+','+lvl+'\n'
+									//text += boneco.name+","+boneco.vocation+","++"</br>";
+									
+									if(c == data.length){
+										//Quando acabar o fetch de tudo
+										//Atualizar a tabela no Google Sheets
+										//document.getElementById("content").innerHTML = text;
+										//console.log(toPost);
+										var formData = new FormData();
+										formData.append('data',text);
+										fetch(url,{method:'POST',body:formData})
+											.then(res => res.json())
+											.then(output => {
+												console.log(output);
+												document.getElementById('content').innerHTML = "Foi, dá uma olhada la";
+												close();
+											});
+									}
+								}
+							})
+					});
+					
+				})
+			
+		</script>
+	</head>
+	<body>
+	<div id="content">Segura que tá fazeno</div>
+	</body>
 </html>
