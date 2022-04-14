@@ -17,7 +17,7 @@
 							.then(res => res.json())
 							.then(tibia => {
 								c++;
-								if(c>1){
+								if(row[0].toString!='Nome'){
 									boneco = tibia.characters.character;
 									var nome = row[0].toString().replace(',','');
 									var cargo = row[1].toString().replace(',','');
