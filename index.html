@@ -5,7 +5,7 @@
 			var query = 'SELECT+D';
 			var text = '';
 			var toPost;
-			var url = 'https://script.google.com/macros/s/AKfycbwbCKuwxG1aPeMUnnWsBN7PP8nx_R3bny9OOpuMewLC6pIE2Z531n-0cs82FNmoVCKfHQ/exec';
+			var url = 'https://script.google.com/macros/s/AKfycbzMtmv-gGRdpGgn4i_WynGRgN6FAsfgJC12jLfYfdaqpPYSZ1-kVwB7Jz6f2WCyJ2Vg/exec';
 			fetch(url)
 				.then(res => res.json())
 				.then(data => {
@@ -17,7 +17,7 @@
 							.then(res => res.json())
 							.then(tibia => {
 								c++;
-								if(row[0].toString!='Nome'){
+								if(row[0].toString()!='Nome'){
 									boneco = tibia.characters.character;
 									var nome = row[0].toString().replace(',','');
 									var cargo = row[1].toString().replace(',','');
